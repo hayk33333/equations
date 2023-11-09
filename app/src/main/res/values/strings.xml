@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Equations</string>
+    <string name="a">Введите a</string>
+    <string name="bx">Введите b</string>
+    <string name="c">Введите c</string>
+    <string name="count">Вычислить</string>
+    <string name="k">Введите k</string>
+    <string name="b">Введите b</string>
+</resources>
