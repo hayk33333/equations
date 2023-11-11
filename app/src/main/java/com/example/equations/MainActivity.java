@@ -60,44 +60,109 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonL1(View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        EditText objectA = findViewById(R.id.editTextA);
-        double a = Double.parseDouble(objectA.getText().toString());
-        EditText objectB = findViewById(R.id.editTextB);
-        double b = Double.parseDouble(objectB.getText().toString());
-        EditText objectC = findViewById(R.id.editTextC);
-        double c = Double.parseDouble(objectC.getText().toString());
+        closeKeyBoard(view);
         TextView res = findViewById(R.id.result);
+        EditText objectA = findViewById(R.id.editTextA);
+        boolean isNumber = true;
+        try {
+            double a = Double.parseDouble(objectA.getText().toString());
+        }catch (NumberFormatException e){
+            objectA.setError("Пожалуйста, введите число.");
+            isNumber = false;
+        }
+        EditText objectB = findViewById(R.id.editTextB);
+        try {
+            double b = Double.parseDouble(objectB.getText().toString());
+        }catch (NumberFormatException e){
+            objectB.setError("Пожалуйста, введите число.");
+            isNumber = false;
+        }
+        EditText objectC = findViewById(R.id.editTextC);
+        try {
+            double c = Double.parseDouble(objectC.getText().toString());
+        }catch (NumberFormatException e){
+            objectC.setError("Пожалуйста, введите число.");
+            isNumber = false;
+        }
+        if (!isNumber){
+            return;
+        }
+        double a = Double.parseDouble(objectA.getText().toString());
+        double b = Double.parseDouble(objectB.getText().toString());
+        double c = Double.parseDouble(objectC.getText().toString());
         double d = Math.pow(b, 2) - (4 * a * c);
-        if (a == 0 && b == 0 && c == 0) {
-            String r = "any";
-            res.setText(r);
-        }
-
-        else if (d < 0) {
-            String r = "none";
-            res.setText(r);
-        }
-        else if (d == 0) {
-            res.setText(String.valueOf(-b / (2 * a)));
-        }
-        else {
-            String r = String.valueOf((-b + Math.sqrt(d)) / (2 * a)) + " " + (-b - Math.sqrt(d)) / (2 * a);
-            res.setText(r);
+        if (a == 0){
+            res.setTextSize(20);
+            res.setTextColor(getResources().getColor(R.color.red));
+            res.setText("Значение а в квадратном уравнении не может быть равно нулю.");
+        }else{
+            if (d < 0){
+                res.setTextSize(30);
+                res.setTextColor(getResources().getColor(R.color.black));
+                res.setText("Квадратное уравнение не имеет решения.");
+            }
+            else if (d == 0) {
+                double x = -b / (2 * a);
+                String result = String.valueOf(x);
+                res.setTextSize(30);
+                res.setTextColor(getResources().getColor(R.color.black));
+                res.setText("x = " + result);
+            }
+            else {
+                double x1 = (-b + Math.sqrt(d)) / (2 * a);
+                double x2 = (-b - Math.sqrt(d)) / (2 * a);
+                String result1 = String.valueOf(x1);
+                String result2 = String.valueOf(x2);
+                res.setTextSize(30);
+                res.setTextColor(getResources().getColor(R.color.black));
+                res.setText("x = " + result1 + "\n" + "x = " + result2);
+            }
         }
 
 
     }
     public void buttonL2(View view) {
+        closeKeyBoard(view);
+        boolean isNumber = true;
+        EditText objectK = findViewById(R.id.editTextK);
+        try {
+            double a = Double.parseDouble(objectK.getText().toString());
+        }catch (NumberFormatException e){
+            objectK.setError("Пожалуйста, введите число.");
+            isNumber = false;
+        }
+        EditText objectB = findViewById(R.id.editTextB);
+        try {
+            double b = Double.parseDouble(objectB.getText().toString());
+        }catch (NumberFormatException e){
+            objectB.setError("Пожалуйста, введите число.");
+            isNumber = false;
+        }
+        TextView res = findViewById(R.id.result2);
+        if (!isNumber){
+            return;
+        }
+        double k = Double.parseDouble(objectK.getText().toString());
+        double b = Double.parseDouble(objectB.getText().toString());
+        if (k == 0){
+            res.setTextSize(20);
+            res.setTextColor(getResources().getColor(R.color.red));
+            res.setText("Значение k в уравнении не может быть равно нулю.");
+        }
+        else {
+            res.setTextSize(30);
+            res.setTextColor(getResources().getColor(R.color.black));
+            double x = (-b / k);
+            if ((int) x == x){
+                x = (int) x;
+            }
+            String result = String.valueOf(x);
+            res.setText("x = " + result);
+        }
+
+    }
+    public void closeKeyBoard(View view){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        EditText objectK = findViewById(R.id.editTextK);
-        double k = Double.parseDouble(objectK.getText().toString());
-        EditText objectB = findViewById(R.id.editTextB);
-        double b = Double.parseDouble(objectB.getText().toString());
-        TextView res = findViewById(R.id.result2);
-        String result = String.valueOf((-b / k));
-        res.setText(result);
     }
 }
